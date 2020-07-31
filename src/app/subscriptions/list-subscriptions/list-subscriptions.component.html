@@ -1,0 +1,38 @@
+<div class="wrapper">
+
+
+  <!-- <p-card id="card" *ngFor="let sub of subscriptions" header="{{sub.title}}" subheader={{sub.startDateString}} [style]="{width: '360px'}">
+      <div>Price: {{sub.price}}</div>
+      <div>Cycle: {{sub.billingCycle}}</div>
+          <p-footer>
+              <a pButton type="button" label="Edit" icon="pi pi-pencil" style="margin-right: .25em" [routerLink]="['/edit', sub.id]"></a>
+              <button pButton type="button" (click)="onConfirm(sub.id, sub.title)" label="Delete" icon="pi pi-times" class="ui-button-danger" ></button>
+          </p-footer>
+          <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+  </p-card> -->
+
+
+  <mat-card *ngFor="let sub of subscriptions">
+    <mat-card-title>
+      {{sub.title}}
+    </mat-card-title>
+    <mat-card-subtitle>
+      {{sub.startDate}}
+    </mat-card-subtitle>
+    <mat-card-content>
+      {{sub.billingCycle}}
+      {{sub.price}}
+    </mat-card-content>
+    <mat-card-actions>
+      <a mat-raised-button [routerLink]="['/edit', sub.id]">Edit</a>
+      <button mat-raised-button (click)="onDelete(sub.id)">Delete</button>
+
+    </mat-card-actions>
+  </mat-card>
+
+  </div>
+
+
+
+  <mat-paginator [length]="totalSubscriptions" [pageSize]="subscriptionsPerPage" [pageSizeOptions]="pageSizeOptions"
+    (page)="onChangedPage($event)" *ngIf="subscriptions.length > 0"></mat-paginator>

@@ -1,0 +1,46 @@
+<mat-toolbar color="primary">
+
+  <span>
+    <a routerLink="/">Subscription Tracker</a>
+  </span>
+
+  <span class="spacer"></span>
+
+
+  <div fxLayout="row" fxShow="false" fxShow.gt-sm>
+    <button *ngIf="!userIsAuthenticated" mat-button routerLink="/login">Login</button>
+    <button *ngIf="!userIsAuthenticated" mat-button routerLink="/register">Sign Up</button>
+  </div>
+
+  <!-- <button *ngIf="userIsAuthenticated" mat-button [mat-menu-trigger-for]="menu" [mat-menu-trigger-for]="menu"
+    fxHide="false" fxHide.gt-sm>
+    ☰
+  </button> -->
+
+  <button *ngIf="userIsAuthenticated" mat-button [mat-menu-trigger-for]="menu" [mat-menu-trigger-for]="menu">
+    Account
+  </button>
+
+</mat-toolbar>
+
+
+
+<mat-menu x-position="before" #menu="matMenu">
+
+  <div *ngIf="userIsAuthenticated">
+    <button mat-menu-item routerLink="/create">Add Subscriptions</button>
+    <button mat-menu-item routerLink="/subscriptions">My Subscriptions</button>
+    <button mat-menu-item routerLink="/charts">Charts</button>
+    <button mat-menu-item routerLink="/subscriptions/calendar">Calendar View</button>
+    <button mat-menu-item (click)="onLogout()">Logout</button>
+  </div>
+
+  <div *ngIf="!userIsAuthenticated">
+    <button mat-menu-item routerLink="/login">Login</button>
+    <button mat-menu-item routerLink="/register">Sign Up</button>
+  </div>
+
+
+
+
+</mat-menu>
