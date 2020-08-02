@@ -21,14 +21,14 @@ export class CreateSubscriptionComponent implements OnInit {
 	private mode = 'create';
 
 	onSubmit() {
-		let formattedDate = moment(this.form.value.startDate).format('LL');
-		let momentDate = moment(this.form.value.startDate).format('YYYY-MM-DD');
+		let fullStartDateString = moment(this.form.value.startDate).format('LL');
+		let formattedStartDate = moment(this.form.value.startDate).format('YYYY-MM-DD');
 
 		const subscriptionData: UserSubscription = {
 			id: null,
 			title: this.form.value.title,
-			startDate: momentDate,
-			startDateString: formattedDate,
+			startDate: formattedStartDate,
+			startDateString: fullStartDateString,
 			price: this.form.value.price,
 			billingCycle: this.form.value.billingCycle,
 			tags: this.form.value.tags,
@@ -72,13 +72,12 @@ export class CreateSubscriptionComponent implements OnInit {
 						owner: subscriptionData.owner,
 						tags: subscriptionData.tags
 					};
-					console.log(this.subscription);
 
-					let date = new Date(this.subscription.startDate);
+					let startDate = new Date(this.subscription.startDate);
 					this.form.setValue({
 						title: this.subscription.title,
 						price: this.subscription.price,
-						startDate: date,
+						startDate: startDate,
 						billingCycle: this.subscription.billingCycle,
 						tags: this.subscription.tags
 					});

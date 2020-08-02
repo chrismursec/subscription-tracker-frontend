@@ -4,6 +4,7 @@ import { SubscriptionService } from '../subscriptions/subscription.service';
 import { Subscription } from 'rxjs';
 import { UserSubscription } from '../subscriptions/subscription.model';
 import * as moment from 'moment';
+import { CalendarEvent } from './calendar-event.model';
 
 @Component({
 	selector: 'app-calendar-view',
@@ -13,22 +14,22 @@ import * as moment from 'moment';
 export class CalendarViewComponent implements OnInit {
 	constructor(private subscriptionService: SubscriptionService) {}
 
-	events: any[] = [];
-	subscriptions: any[] = [];
+	subscriptions: UserSubscription[];
+	events: CalendarEvent[];
 	private subscriptionSub: Subscription;
+
 	calendarOptions: CalendarOptions = {
 		initialView: 'dayGridMonth',
 		events: [],
 		headerToolbar: {
-			left: 'prev,next',
+			left: '',
 			center: 'title',
 			right: ''
 		}
 	};
 
 	formatDate(date) {
-		let formattedDate = moment(date).format('YYYY-MM-DD');
-		return formattedDate;
+		return moment(date).format('YYYY-MM-DD');
 	}
 
 	getUpcomingDate(date, cycle) {
@@ -36,8 +37,8 @@ export class CalendarViewComponent implements OnInit {
 			case 'weekly':
 				return this.makeThisWeek(date);
 			case 'monthly':
-				let newDate = this.makeThisYear(date);
-				return this.makeThisMonth(newDate);
+				date = this.makeThisYear(date);
+				return this.makeThisMonth(date);
 			case 'yearly':
 				return this.makeThisYear(date);
 			default:
@@ -45,44 +46,44 @@ export class CalendarViewComponent implements OnInit {
 		}
 	}
 
-	makeThisMonth(date) {
-		const now = new Date();
-		const formattedNow = this.formatDate(now);
-		const formattedSubDate = this.formatDate(date);
-		const nowMonth = formattedNow.substring(5, 7);
+	/*TODO:
+      -Implement makeThisWeek
+    */
+	makeThisWeek(date) {}
 
-		let thisMonthSubDate = `${formattedSubDate.substring(0, 4)}-${nowMonth}-${formattedSubDate.substring(8, 10)}`;
+	makeThisMonth(date) {
+		const currentDate = this.formatDate(new Date());
+		const subscriptionDate = this.formatDate(date);
+		const currentMonth = currentDate.substring(5, 7);
+
+		const thisMonthSubDate = `${subscriptionDate.substring(0, 4)}-${currentMonth}-${subscriptionDate.substring(
+			8,
+			10
+		)}`;
 		return thisMonthSubDate;
 	}
 
-	makeThisWeek(date) {}
-
 	makeThisYear(date) {
-		let currentDate = moment().format('YYYY-MM-DD');
-		let subscriptionOGDate = moment(date).format('YYYY-MM-DD');
-
-		let difference = parseInt(currentDate.substring(0, 4)) - parseInt(subscriptionOGDate.substring(0, 4));
-		let futureYear = moment(date).add(difference, 'years').format('YYYY-MM-DD');
-		return futureYear;
+		const currentDate = this.formatDate(new Date());
+		const subscriptionDate = moment(date).format('YYYY-MM-DD');
+		const difference = parseInt(currentDate.substring(0, 4)) - parseInt(subscriptionDate.substring(0, 4));
+		const currentYear = moment(date).add(difference, 'years').format('YYYY-MM-DD');
+		return currentYear;
 	}
 
 	ngOnInit() {
 		this.subscriptionService.getSubscriptions(null, null);
-
 		this.subscriptionSub = this.subscriptionService
 			.getSubscriptionUpdateListener()
 			.subscribe((subscriptionData: { subscriptions: UserSubscription[]; subscriptionCount: number }) => {
 				this.events = [];
 				this.subscriptions = subscriptionData.subscriptions;
 				this.subscriptions.map((sub) => {
-					// this.makeThisMonth(sub.startDate);
 					this.events.push({
 						title: sub.title,
 						start: this.getUpcomingDate(sub.startDate, sub.billingCycle)
 					});
 				});
-				console.log(this.events);
-
 				this.calendarOptions.events = this.events;
 			});
 	}

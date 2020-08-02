@@ -25,7 +25,8 @@
     </mat-card-content>
     <mat-card-actions>
       <a mat-raised-button [routerLink]="['/edit', sub.id]">Edit</a>
-      <button mat-raised-button (click)="onDelete(sub.id)">Delete</button>
+      <!-- <button mat-raised-button (click)="onDelete(sub.id)">Delete</button> -->
+      <button mat-raised-button (click)="openDeleteDialog(sub.id, sub.title)">Delete</button>
 
     </mat-card-actions>
   </mat-card>

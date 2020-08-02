@@ -3,19 +3,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import {MatNativeDateModule} from '@angular/material/core';
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatCardModule} from '@angular/material/card';
-import {MatInputModule} from '@angular/material/input';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatRadioModule} from '@angular/material/radio';
-import {MatListModule} from '@angular/material/list';
-import {MatSelectModule} from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,55 +31,52 @@ import { CalendarViewComponent } from './calendar-view/calendar-view.component';
 
 import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import { DeleteDialogComponent } from './subscriptions/list-subscriptions/delete-dialog/delete-dialog.component';
 
-
-FullCalendarModule.registerPlugins([ // register FullCalendar plugins
-  dayGridPlugin,
-
+FullCalendarModule.registerPlugins([
+	// register FullCalendar plugins
+	dayGridPlugin
 ]);
 
-
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    LoginComponent,
-    RegisterComponent,
-    CreateSubscriptionComponent,
-    ListSubscriptionsComponent,
-    HomeComponent,
-    CalendarViewComponent
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    FormsModule,
-    HttpClientModule,
+	declarations: [
+		AppComponent,
+		HeaderComponent,
+		LoginComponent,
+		RegisterComponent,
+		CreateSubscriptionComponent,
+		ListSubscriptionsComponent,
+		HomeComponent,
+		CalendarViewComponent,
+		DeleteDialogComponent
+	],
+	imports: [
+		BrowserModule,
+		BrowserAnimationsModule,
+		AppRoutingModule,
+		ReactiveFormsModule,
+		FormsModule,
+		HttpClientModule,
 
-    FontAwesomeModule,
-    FullCalendarModule,
+		FontAwesomeModule,
+		FullCalendarModule,
 
-
-    MatToolbarModule,
-    MatMenuModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatCardModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatRadioModule,
-    MatListModule,
-    MatSelectModule,
-    MatPaginatorModule,
-    MatDialogModule
-  ],
-  providers: [
-  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    AuthGuard
-  ],
-  bootstrap: [AppComponent]
+		MatToolbarModule,
+		MatMenuModule,
+		MatButtonModule,
+		MatFormFieldModule,
+		MatCardModule,
+		MatInputModule,
+		MatDatepickerModule,
+		MatNativeDateModule,
+		MatRadioModule,
+		MatListModule,
+		MatSelectModule,
+		MatPaginatorModule,
+		MatDialogModule
+	],
+	providers: [ { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, AuthGuard ],
+	bootstrap: [ AppComponent ],
+	entryComponents: [ DeleteDialogComponent ]
 })
-export class AppModule { }
+export class AppModule {}
