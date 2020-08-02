@@ -3,6 +3,7 @@ import { CalendarOptions } from '@fullcalendar/angular';
 import { SubscriptionService } from '../subscriptions/subscription.service';
 import { Subscription } from 'rxjs';
 import { UserSubscription } from '../subscriptions/subscription.model';
+import * as moment from 'moment';
 
 @Component({
 	selector: 'app-calendar-view',
@@ -19,23 +20,14 @@ export class CalendarViewComponent implements OnInit {
 		initialView: 'dayGridMonth',
 		events: [],
 		headerToolbar: {
-			left: '',
+			left: 'prev,next',
 			center: 'title',
 			right: ''
 		}
 	};
 
 	formatDate(date) {
-		const d = new Date(date);
-		let month = '' + (d.getMonth() + 1);
-		let day = '' + (d.getDate() + 1);
-
-		let year = d.getFullYear();
-
-		if (month.length < 2) month = '0' + month;
-		if (day.length < 2) day = '0' + day;
-
-		const formattedDate = [ year, month, day ].join('-');
+		let formattedDate = moment(date).format('YYYY-MM-DD');
 		return formattedDate;
 	}
 
@@ -57,7 +49,6 @@ export class CalendarViewComponent implements OnInit {
 		const now = new Date();
 		const formattedNow = this.formatDate(now);
 		const formattedSubDate = this.formatDate(date);
-		const subMonth = formattedSubDate.substring(5, 7);
 		const nowMonth = formattedNow.substring(5, 7);
 
 		let thisMonthSubDate = `${formattedSubDate.substring(0, 4)}-${nowMonth}-${formattedSubDate.substring(8, 10)}`;
@@ -67,14 +58,12 @@ export class CalendarViewComponent implements OnInit {
 	makeThisWeek(date) {}
 
 	makeThisYear(date) {
-		const now = new Date();
-		const formattedNow = this.formatDate(now);
-		const formattedSubDate = this.formatDate(date);
-		const subYear = formattedSubDate.substring(0, 4);
-		const nowYear = formattedNow.substring(0, 4);
+		let currentDate = moment().format('YYYY-MM-DD');
+		let subscriptionOGDate = moment(date).format('YYYY-MM-DD');
 
-		let thisYearSubDate = `${nowYear}-${formattedSubDate.substring(5, 7)}-${formattedSubDate.substring(8, 10)}`;
-		return thisYearSubDate;
+		let difference = parseInt(currentDate.substring(0, 4)) - parseInt(subscriptionOGDate.substring(0, 4));
+		let futureYear = moment(date).add(difference, 'years').format('YYYY-MM-DD');
+		return futureYear;
 	}
 
 	ngOnInit() {
@@ -83,16 +72,14 @@ export class CalendarViewComponent implements OnInit {
 		this.subscriptionSub = this.subscriptionService
 			.getSubscriptionUpdateListener()
 			.subscribe((subscriptionData: { subscriptions: UserSubscription[]; subscriptionCount: number }) => {
+				this.events = [];
 				this.subscriptions = subscriptionData.subscriptions;
 				this.subscriptions.map((sub) => {
-					this.makeThisMonth(sub.startDate);
-					this.events = [
-						...this.events,
-						{
-							title: sub.title,
-							start: this.getUpcomingDate(sub.startDate, sub.billingCycle)
-						}
-					];
+					// this.makeThisMonth(sub.startDate);
+					this.events.push({
+						title: sub.title,
+						start: this.getUpcomingDate(sub.startDate, sub.billingCycle)
+					});
 				});
 				console.log(this.events);
 

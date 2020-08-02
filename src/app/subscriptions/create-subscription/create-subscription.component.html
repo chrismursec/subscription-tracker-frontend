@@ -1,4 +1,4 @@
-<mat-card  class="wrapper">
+<mat-card class="wrapper">
   <form [formGroup]="form" (submit)="onSubmit()">
 
 
@@ -6,7 +6,9 @@
       <mat-label>Service Name</mat-label>
       <input placeholder="Service Name" formControlName="title" matInput>
     </mat-form-field>
-
+    <!-- TODO:
+          -Configure the datepicker to not allow dates in the future.
+    -->
     <mat-form-field appearance="fill">
       <mat-label>Choose a date</mat-label>
       <input matInput [matDatepicker]="picker" formControlName="startDate">
@@ -22,12 +24,12 @@
 
     <mat-label>Billing Cycle</mat-label>
 
-      <mat-radio-group class="radio-buttons" aria-abel="How often do you pay?" formControlName="billingCycle">
+    <mat-radio-group class="radio-buttons" aria-abel="How often do you pay?" formControlName="billingCycle">
 
-        <mat-radio-button value="weekly">Weekly</mat-radio-button>
-        <mat-radio-button value="monthly">Monthly</mat-radio-button>
-        <mat-radio-button value="yearly">Yearly</mat-radio-button>
-      </mat-radio-group>
+      <mat-radio-button value="weekly">Weekly</mat-radio-button>
+      <mat-radio-button value="monthly">Monthly</mat-radio-button>
+      <mat-radio-button value="yearly">Yearly</mat-radio-button>
+    </mat-radio-group>
 
     <hr>
 
@@ -35,7 +37,7 @@
     <mat-form-field appearance="fill">
       <mat-label>Tags</mat-label>
       <mat-select formControlName="tags" multiple>
-        <mat-option *ngFor="let cat of categories" [value]="cat">{{cat}}</mat-option>
+        <mat-option *ngFor="let cat of categories" [value]="cat">{{ cat }}</mat-option>
       </mat-select>
     </mat-form-field>
 
