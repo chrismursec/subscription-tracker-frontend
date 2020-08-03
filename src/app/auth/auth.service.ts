@@ -36,9 +36,7 @@ export class AuthService {
 
 	createUser(firstName: string, lastName: string, email: string, password: string) {
 		const user: User = { firstName: firstName, lastName: lastName, email: email, password: password };
-		this.http.post(this.hostUrl + '/signup', user).subscribe((response) => {
-			console.log(response);
-		});
+		this.http.post(this.hostUrl + '/signup', user).subscribe((response) => {});
 	}
 
 	login(email: string, password: string) {
@@ -54,17 +52,14 @@ export class AuthService {
 				this.token = token;
 
 				if (token) {
-					console.log(token);
 					const expiresInDuration = response.expiresIn;
 					this.setAuthTimer(expiresInDuration);
 					this.isAuthenticated = true;
 					this.userId = response.userId;
 					this.userName = response.firstName + ' ' + response.lastName;
-					console.log(this.getUserName());
 					this.authStatusListener.next(true);
 					const now = new Date();
 					const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
-					console.log(expirationDate);
 					this.saveAuthData(token, expirationDate, this.userId, response.firstName, response.lastName);
 					this.router.navigate([ '/' ]);
 				}
@@ -98,7 +93,6 @@ export class AuthService {
 	}
 
 	setAuthTimer(duration: number) {
-		console.log('Setting Timer: ' + duration);
 		this.tokenTimer = setTimeout(() => {
 			this.logout();
 		}, duration * 1000);

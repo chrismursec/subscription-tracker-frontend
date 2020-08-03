@@ -1,12 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-.wrapper {
-	margin-top: 2%;
-	margin-left: 5%;
-	margin-right: 5%;
+html,
+body {
+  height: 100%;
 }
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.wrapper {
+  margin-top: 2%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
 mat-form-field {
   width: 100%;
+}
+
+.page-content {
+  min-height: 80vh;
 }

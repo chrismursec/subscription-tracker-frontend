@@ -32,6 +32,7 @@ import { CalendarViewComponent } from './calendar-view/calendar-view.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { DeleteDialogComponent } from './subscriptions/list-subscriptions/delete-dialog/delete-dialog.component';
+import { FooterComponent } from './layout/footer/footer.component';
 
 FullCalendarModule.registerPlugins([
 	// register FullCalendar plugins
@@ -48,7 +49,8 @@ FullCalendarModule.registerPlugins([
 		ListSubscriptionsComponent,
 		HomeComponent,
 		CalendarViewComponent,
-		DeleteDialogComponent
+		DeleteDialogComponent,
+		FooterComponent
 	],
 	imports: [
 		BrowserModule,
