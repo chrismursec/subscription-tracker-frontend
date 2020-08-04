@@ -1,7 +1,8 @@
-.spacer {
-  flex: 1 1 auto;
-}
-
 footer {
+  background-color: #9E9E9E !important;
   margin-top: 5em;
+
+  .spacer {
+    flex: 1 1 auto;
+  }
 }

@@ -17,16 +17,16 @@
       {{ sub.title }}
     </mat-card-title>
     <mat-card-subtitle>
-      {{ sub.startDateString }}
+      Start Date: {{ sub.startDateString }}
     </mat-card-subtitle>
     <mat-card-content>
-      <p>Cycle: {{ sub.billingCycle }}</p>
+      <p>Cycle: {{ toUpper(sub.billingCycle) }}</p>
       <p>Price: £{{ sub.price }}</p>
     </mat-card-content>
     <mat-card-actions>
-      <a mat-raised-button [routerLink]="['/edit', sub.id]">Edit</a>
+      <a mat-raised-button [routerLink]="['/edit', sub.id]" color="accent">Edit</a>
       <!-- <button mat-raised-button (click)="onDelete(sub.id)">Delete</button> -->
-      <button mat-raised-button (click)="openDeleteDialog(sub.id, sub.title)">Delete</button>
+      <button mat-raised-button (click)="openDeleteDialog(sub.id, sub.title)" color="warn">Delete</button>
 
     </mat-card-actions>
   </mat-card>
@@ -35,5 +35,5 @@
 
 
 
-<mat-paginator [length]="totalSubscriptions" [pageSize]="subscriptionsPerPage" [pageSizeOptions]="pageSizeOptions"
+<mat-paginator [length]="subscriptionCount" [pageSize]="subscriptionsPerPage" [pageSizeOptions]="pageSizeOptions"
   (page)="onChangedPage($event)" *ngIf="subscriptions.length > 0"></mat-paginator>

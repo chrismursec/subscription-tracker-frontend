@@ -1,17 +1,20 @@
-<mat-card class="wrapper">
+<div class="wrapper">
+  <mat-card class="form-card">
 
-  <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
 
-    <mat-form-field>
-      <input type="email" name="email" placeholder="Email Address" formControlName="email" required email matInput/>
-    </mat-form-field>
+      <mat-form-field>
+        <input type="email" name="email" placeholder="Email Address" formControlName="email" required email matInput />
+      </mat-form-field>
 
-    <mat-form-field>
-      <input type="password" name="password" placeholder="Password" formControlName="password" required matInput>
-    </mat-form-field>
+      <mat-form-field>
+        <input type="password" name="password" placeholder="Password" formControlName="password" required matInput>
+      </mat-form-field>
 
 
-    <button mat-raised-button color="accent" type="submit">Login</button>
+      <button mat-raised-button color="accent" type="submit">LOG IN</button>
 
-  </form>
-</mat-card>
+    </form>
+  </mat-card>
+
+</div>

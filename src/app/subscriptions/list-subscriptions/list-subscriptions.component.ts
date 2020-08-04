@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
+import { first } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-list-subscriptions',
@@ -37,6 +38,14 @@ export class ListSubscriptionsComponent implements OnInit {
 			title: title
 		};
 		this.dialog.open(DeleteDialogComponent, dialogConfig);
+	}
+
+	toUpper(cycle: string) {
+		let firstLetter = cycle.substring(0, 1);
+		let rest = cycle.substring(1);
+		firstLetter = firstLetter.toUpperCase();
+		cycle = firstLetter + rest;
+		return cycle;
 	}
 
 	ngOnInit() {
