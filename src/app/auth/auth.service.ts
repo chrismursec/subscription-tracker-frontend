@@ -36,7 +36,14 @@ export class AuthService {
 
 	createUser(firstName: string, lastName: string, email: string, password: string) {
 		const user: User = { firstName: firstName, lastName: lastName, email: email, password: password };
-		this.http.post(this.hostUrl + '/signup', user).subscribe((response) => {});
+		return this.http.post(this.hostUrl + '/signup', user).subscribe(
+			(response) => {
+				this.router.navigate([ '/login' ]);
+			},
+			(error) => {
+				this.authStatusListener.next(false);
+			}
+		);
 	}
 
 	login(email: string, password: string) {
@@ -47,23 +54,28 @@ export class AuthService {
 				this.hostUrl + '/login',
 				authData
 			)
-			.subscribe((response) => {
-				const token = response.token;
-				this.token = token;
+			.subscribe(
+				(response) => {
+					const token = response.token;
+					this.token = token;
 
-				if (token) {
-					const expiresInDuration = response.expiresIn;
-					this.setAuthTimer(expiresInDuration);
-					this.isAuthenticated = true;
-					this.userId = response.userId;
-					this.userName = response.firstName + ' ' + response.lastName;
-					this.authStatusListener.next(true);
-					const now = new Date();
-					const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
-					this.saveAuthData(token, expirationDate, this.userId, response.firstName, response.lastName);
-					this.router.navigate([ '/' ]);
+					if (token) {
+						const expiresInDuration = response.expiresIn;
+						this.setAuthTimer(expiresInDuration);
+						this.isAuthenticated = true;
+						this.userId = response.userId;
+						this.userName = response.firstName + ' ' + response.lastName;
+						this.authStatusListener.next(true);
+						const now = new Date();
+						const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
+						this.saveAuthData(token, expirationDate, this.userId, response.firstName, response.lastName);
+						this.router.navigate([ '/' ]);
+					}
+				},
+				(error) => {
+					this.authStatusListener.next(false);
 				}
-			});
+			);
 	}
 
 	autoAuthUser() {

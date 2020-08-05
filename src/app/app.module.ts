@@ -21,6 +21,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
@@ -41,6 +42,7 @@ import { TagChartComponent } from './charts/tag-chart/tag-chart.component';
 import { ChartRootComponent } from './charts/chart-root/chart-root.component';
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 import { FeaturesComponent } from './pages/features/features.component';
+import { ErrorInterceptor } from './error.interceptor';
 
 FullCalendarModule.registerPlugins([ dayGridPlugin ]);
 
@@ -86,10 +88,15 @@ FullCalendarModule.registerPlugins([ dayGridPlugin ]);
 		MatRadioModule,
 		MatSelectModule,
 		MatSidenavModule,
+		MatSnackBarModule,
 		MatTabsModule,
 		MatToolbarModule
 	],
-	providers: [ { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, AuthGuard ],
+	providers: [
+		{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+		{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+		AuthGuard
+	],
 	bootstrap: [ AppComponent ],
 	entryComponents: [ DeleteDialogComponent ]
 })

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SubscriptionService } from '../subscription.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, MinLengthValidator } from '@angular/forms';
 import { UserSubscription } from '../subscription.model';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import * as moment from 'moment';
@@ -48,7 +48,7 @@ export class CreateSubscriptionComponent implements OnInit {
 
 	ngOnInit() {
 		this.form = new FormGroup({
-			title: new FormControl(null, [ Validators.required ]),
+			title: new FormControl(null, [ Validators.required, Validators.minLength(3) ]),
 			startDate: new FormControl(null, [ Validators.required ]),
 			price: new FormControl(null, [ Validators.required ]),
 			billingCycle: new FormControl(null, [ Validators.required ]),
