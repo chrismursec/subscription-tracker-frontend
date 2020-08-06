@@ -28,7 +28,7 @@ export class DeleteDialogComponent implements OnInit {
 
 	onDelete(id: string) {
 		this.subscriptionService.deleteSubscription(id).subscribe(() => {
-			this.subscriptionService.getSubscriptions(this.subscriptionsPerPage, this.currentPage);
+			this.subscriptionService.getSubscriptions(this.subscriptionsPerPage, this.currentPage, null);
 		});
 		this.close();
 	}

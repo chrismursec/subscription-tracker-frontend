@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SubscriptionService } from '../subscription.service';
-import { FormGroup, FormControl, Validators, MinLengthValidator } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserSubscription } from '../subscription.model';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import * as moment from 'moment';
@@ -39,7 +39,6 @@ export class CreateSubscriptionComponent implements OnInit {
 			this.subscriptionService.addSubscription(subscriptionData);
 			this.form.reset();
 		} else if (this.mode === 'edit') {
-			console.log(this.subscription);
 			subscriptionData.id = this.subscription.id;
 			subscriptionData.owner = this.subscription.owner;
 			this.subscriptionService.updateSubscription(subscriptionData);

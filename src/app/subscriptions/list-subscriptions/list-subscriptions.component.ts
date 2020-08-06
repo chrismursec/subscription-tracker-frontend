@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
-import { first } from 'rxjs/operators';
+import { faEdit, faTrash, faCalendar, faRedoAlt, faTags } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
 	selector: 'app-list-subscriptions',
@@ -15,21 +15,37 @@ import { first } from 'rxjs/operators';
 export class ListSubscriptionsComponent implements OnInit {
 	constructor(private subscriptionService: SubscriptionService, public dialog: MatDialog) {}
 
+	private subscriptionSub: Subscription;
 	subscriptions: UserSubscription[] = [];
 	subscriptionCount = 0;
 	subscriptionsPerPage = 5;
 	currentPage = 1;
 	pageSizeOptions = [ 1, 2, 5, 10 ];
-	private subscriptionSub: Subscription;
+	sortChoice = 'title';
+	sortOptions = [
+		{ value: 'title', viewValue: 'A-Z' },
+		{ value: 'startDate', viewValue: 'Start Date' },
+		{ value: 'price', viewValue: 'Price' }
+	];
+
+	faEdit = faEdit;
+	faTrash = faTrash;
+	faCalendar = faCalendar;
+	faRedoAlt = faRedoAlt;
+	faTags = faTags;
 
 	onChangedPage(pageData: PageEvent) {
 		this.currentPage = pageData.pageIndex + 1;
 		this.subscriptionsPerPage = pageData.pageSize;
-		this.subscriptionService.getSubscriptions(this.subscriptionsPerPage, this.currentPage);
+		this.subscriptionService.getSubscriptions(this.subscriptionsPerPage, this.currentPage, this.sortChoice);
+	}
+
+	onSortSelected(sortOption: string) {
+		this.sortChoice = sortOption;
+		this.subscriptionService.getSubscriptions(this.subscriptionsPerPage, this.currentPage, this.sortChoice);
 	}
 
 	openDeleteDialog(id: string, title: string) {
-		console.log(id);
 		const dialogConfig = new MatDialogConfig();
 		dialogConfig.disableClose = true;
 		dialogConfig.autoFocus = true;
@@ -49,7 +65,7 @@ export class ListSubscriptionsComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.subscriptionService.getSubscriptions(this.subscriptionsPerPage, this.currentPage);
+		this.subscriptionService.getSubscriptions(this.subscriptionsPerPage, this.currentPage, this.sortChoice);
 		this.subscriptionSub = this.subscriptionService
 			.getSubscriptionUpdateListener()
 			.subscribe((subscriptionData: { subscriptions: UserSubscription[]; subscriptionCount: number }) => {

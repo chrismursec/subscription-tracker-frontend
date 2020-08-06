@@ -29,14 +29,17 @@ export class SubscriptionService {
 		});
 	}
 
-
-	getSubscriptions(subsPerPage: number, currentPage: number) {
+	getSubscriptions(subsPerPage: number, currentPage: number, sort: string) {
 		let queryParams;
 
 		if (subsPerPage && currentPage) {
 			queryParams = `?pagesize=${subsPerPage}&page=${currentPage}`;
 		} else {
 			queryParams = '';
+		}
+
+		if (sort) {
+			queryParams = `${queryParams}&sort=${sort}`;
 		}
 
 		this.http

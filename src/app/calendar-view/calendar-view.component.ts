@@ -72,7 +72,7 @@ export class CalendarViewComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.subscriptionService.getSubscriptions(null, null);
+		this.subscriptionService.getSubscriptions(null, null, null);
 		this.subscriptionSub = this.subscriptionService
 			.getSubscriptionUpdateListener()
 			.subscribe((subscriptionData: { subscriptions: UserSubscription[]; subscriptionCount: number }) => {

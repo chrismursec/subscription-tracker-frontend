@@ -19,7 +19,6 @@ export class TagChartComponent implements OnInit {
 		this.chartService.getUsersTagData();
 		this.tagSub = this.chartService.getUserTagsUpdateListener().subscribe((tagData) => {
 			this.tags = tagData;
-			console.log(tagData);
 
 			let dataCount = [
 				tagData.tagCount.apps,

@@ -2,7 +2,7 @@
 
   <span>
     <a mat-button routerLink="/" class="header-main">Subscriptions</a>
-    <a mat-button routerLink="/features">Features</a>
+    <a mat-button routerLink="/features" *ngIf="!userIsAuthenticated">Features</a>
   </span>
 
   <span class="spacer"></span>

@@ -1,12 +1,17 @@
-.showcase {
+.hero {
   height: 60vh;
   background-color: #9C27B0;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   padding-top: 3em;
-  text-align: center;
+
+  .hero-content {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+
+  }
 
   .buttons {
     display: flex;
@@ -15,6 +20,17 @@
     a {
       margin-right: 1em;
     }
+  }
+
+  fa-icon {
+    color: #fff;
+    right: 0;
+  }
+
+  h1,
+  h2 {
+    color: #fff !important;
+
   }
 
   .page-title {
@@ -33,6 +49,9 @@
   }
 }
 
+.pattern-grid-lg {
+  color: white
+}
 
 .feature-section {
   padding-top: 10vh;

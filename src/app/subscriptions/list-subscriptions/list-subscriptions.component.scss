@@ -1,3 +1,29 @@
 mat-card {
   margin-bottom: 1em;
+
+  fa-icon {
+    color: #9E9E9E;
+  }
+
+  mat-card-title {
+    display: flex;
+
+    .spacer {
+      flex: 1 1 auto;
+    }
+  }
+
+  mat-card-content {
+    fa-icon {
+      margin-right: 1em;
+    }
+
+    .subscription-info-item {
+      padding-bottom: 1.5em;
+    }
+  }
+}
+
+.sort-option {
+  width: 30%
 }
