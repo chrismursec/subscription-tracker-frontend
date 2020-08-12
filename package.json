@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -28,6 +28,7 @@
     "@fullcalendar/angular": "^5.2.0",
     "@fullcalendar/daygrid": "^5.2.0",
     "chart.js": "^2.9.3",
+    "express": "^4.17.1",
     "moment": "^2.27.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
