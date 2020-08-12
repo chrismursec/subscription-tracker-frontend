@@ -7,8 +7,8 @@
     <h1 class="page-title">Subscription Tracker</h1>
     <h2 class="page-subtitle">All in one application to track your subscriptions. </h2>
     <div class="buttons">
-      <a mat-raised-button routerLink="/features">Features</a>
-      <a mat-raised-button routerLink="/register">Get Started</a>
+      <!-- <a mat-raised-button routerLink="/features">Features</a> -->
+      <a mat-raised-button routerLink="/register" *ngIf="!userIsAuthenticated">Get Started</a>
 
     </div>
   </div>

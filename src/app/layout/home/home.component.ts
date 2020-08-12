@@ -1,17 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { faTable, faCalendar, faChartPie, faCalendarDay } from '@fortawesome/free-solid-svg-icons';
+import { AuthService } from 'src/app/auth/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
-	selector: 'app-home',
-	templateUrl: './home.component.html',
-	styleUrls: [ './home.component.scss' ]
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: [ './home.component.scss' ]
 })
 export class HomeComponent implements OnInit {
-	constructor() {}
+  userIsAuthenticated = false;
+  private authListenerSubs: Subscription;
 
-	faTable = faTable;
-	faCalendar = faCalendar;
-	faChartPie = faChartPie;
-	faCalendarDay = faCalendarDay;
-	ngOnInit() {}
+  constructor(private authService: AuthService) {}
+
+  faTable = faTable;
+  faCalendar = faCalendar;
+  faChartPie = faChartPie;
+  faCalendarDay = faCalendarDay;
+
+  ngOnInit() {
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.authListenerSubs = this.authService.getAuthStatusListener().subscribe((isAuthenticated) => {
+      this.userIsAuthenticated = isAuthenticated;
+    });
+  }
 }

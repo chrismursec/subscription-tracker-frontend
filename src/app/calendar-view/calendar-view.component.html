@@ -1,3 +1,5 @@
 <div class="wrapper">
-  <full-calendar [options]="calendarOptions"></full-calendar>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+
+  <full-calendar [options]="calendarOptions" *ngIf="!isLoading"></full-calendar>
 </div>

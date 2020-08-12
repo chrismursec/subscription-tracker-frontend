@@ -6,85 +6,88 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import * as moment from 'moment';
 
 @Component({
-	selector: 'app-create-subscription',
-	templateUrl: './create-subscription.component.html',
-	styleUrls: [ './create-subscription.component.scss' ]
+  selector: 'app-create-subscription',
+  templateUrl: './create-subscription.component.html',
+  styleUrls: [ './create-subscription.component.scss' ]
 })
 export class CreateSubscriptionComponent implements OnInit {
-	constructor(public subscriptionService: SubscriptionService, public route: ActivatedRoute) {}
+  form: FormGroup;
+  categories = [ 'Apps', 'Bills', 'Donations', 'Entertainment', 'Finances', 'Gaming', 'Personal Care', 'Shopping' ];
+  subscription: UserSubscription;
+  private postId: string;
+  private mode = 'create';
+  isLoading = false;
 
-	form: FormGroup;
-	categories = [ 'Apps', 'Bills', 'Donations', 'Entertainment', 'Finances', 'Gaming', 'Personal Care', 'Shopping' ];
+  constructor(public subscriptionService: SubscriptionService, public route: ActivatedRoute) {}
 
-	subscription: UserSubscription;
-	private postId: string;
-	private mode = 'create';
+  onSubmit() {
+    this.isLoading = true;
+    const fullStartDateString = moment(this.form.value.startDate).format('LL');
+    const formattedStartDate = moment(this.form.value.startDate).format('YYYY-MM-DD');
 
-	onSubmit() {
-		let fullStartDateString = moment(this.form.value.startDate).format('LL');
-		let formattedStartDate = moment(this.form.value.startDate).format('YYYY-MM-DD');
+    const subscriptionData: UserSubscription = {
+      id: null,
+      title: this.form.value.title,
+      startDate: formattedStartDate,
+      startDateString: fullStartDateString,
+      price: this.form.value.price,
+      billingCycle: this.form.value.billingCycle,
+      tags: this.form.value.tags,
+      owner: null
+    };
 
-		const subscriptionData: UserSubscription = {
-			id: null,
-			title: this.form.value.title,
-			startDate: formattedStartDate,
-			startDateString: fullStartDateString,
-			price: this.form.value.price,
-			billingCycle: this.form.value.billingCycle,
-			tags: this.form.value.tags,
-			owner: null
-		};
+    if (this.mode === 'create') {
+      this.subscriptionService.addSubscription(subscriptionData);
+      this.form.reset();
+    } else if (this.mode === 'edit') {
+      subscriptionData.id = this.subscription.id;
+      subscriptionData.owner = this.subscription.owner;
+      this.subscriptionService.updateSubscription(subscriptionData);
+    }
+  }
 
-		if (this.mode === 'create') {
-			this.subscriptionService.addSubscription(subscriptionData);
-			this.form.reset();
-		} else if (this.mode === 'edit') {
-			subscriptionData.id = this.subscription.id;
-			subscriptionData.owner = this.subscription.owner;
-			this.subscriptionService.updateSubscription(subscriptionData);
-		}
-	}
+  ngOnInit() {
+    this.form = new FormGroup({
+      title: new FormControl(null, [ Validators.required, Validators.minLength(3) ]),
+      startDate: new FormControl(null, [ Validators.required ]),
+      price: new FormControl(null, [ Validators.required ]),
+      billingCycle: new FormControl(null, [ Validators.required ]),
+      tags: new FormControl(null, [ Validators.required ])
+    });
 
-	ngOnInit() {
-		this.form = new FormGroup({
-			title: new FormControl(null, [ Validators.required, Validators.minLength(3) ]),
-			startDate: new FormControl(null, [ Validators.required ]),
-			price: new FormControl(null, [ Validators.required ]),
-			billingCycle: new FormControl(null, [ Validators.required ]),
-			tags: new FormControl(null, [ Validators.required ])
-		});
+    this.postId = null;
 
-		this.postId = null;
+    this.route.paramMap.subscribe((paramMap: ParamMap) => {
+      if (paramMap.has('postId')) {
+        this.mode = 'edit';
+        this.postId = paramMap.get('postId');
+        this.isLoading = true;
+        this.subscriptionService.getSubscription(this.postId).subscribe((subscriptionData) => {
+          this.isLoading = false;
+          this.subscription = {
+            id: subscriptionData._id,
+            title: subscriptionData.title,
+            price: subscriptionData.price,
+            startDate: subscriptionData.startDate,
+            billingCycle: subscriptionData.billingCycle,
+            startDateString: subscriptionData.startDateString,
+            owner: subscriptionData.owner,
+            tags: subscriptionData.tags
+          };
 
-		this.route.paramMap.subscribe((paramMap: ParamMap) => {
-			if (paramMap.has('postId')) {
-				this.mode = 'edit';
-				this.postId = paramMap.get('postId');
-				this.subscriptionService.getSubscription(this.postId).subscribe((subscriptionData) => {
-					this.subscription = {
-						id: subscriptionData._id,
-						title: subscriptionData.title,
-						price: subscriptionData.price,
-						startDate: subscriptionData.startDate,
-						billingCycle: subscriptionData.billingCycle,
-						startDateString: subscriptionData.startDateString,
-						owner: subscriptionData.owner,
-						tags: subscriptionData.tags
-					};
-
-					let startDate = new Date(this.subscription.startDate);
-					this.form.setValue({
-						title: this.subscription.title,
-						price: this.subscription.price,
-						startDate: startDate,
-						billingCycle: this.subscription.billingCycle,
-						tags: this.subscription.tags
-					});
-				});
-			} else {
-				this.mode = 'create';
-				this.postId = null;
-			}
-		});
-	}
+          const startDate = new Date(this.subscription.startDate);
+          this.form.setValue({
+            title: this.subscription.title,
+            price: this.subscription.price,
+            startDate,
+            billingCycle: this.subscription.billingCycle,
+            tags: this.subscription.tags
+          });
+        });
+      } else {
+        this.mode = 'create';
+        this.postId = null;
+      }
+    });
+  }
 }

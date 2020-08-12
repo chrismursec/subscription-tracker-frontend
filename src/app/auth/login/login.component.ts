@@ -3,31 +3,35 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { AuthData } from '../auth-data.model';
 import { Subscription } from 'rxjs';
+
 @Component({
-	selector: 'app-login',
-	templateUrl: './login.component.html',
-	styleUrls: [ './login.component.scss' ]
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: [ './login.component.scss' ]
 })
 export class LoginComponent implements OnInit, OnDestroy {
-	constructor(private authService: AuthService) {}
-	loginForm: FormGroup;
-	private authStatusSub: Subscription;
+  loginForm: FormGroup;
+  private authStatusSub: Subscription;
+  isLoading = false;
 
-	onLogin() {
-		const authData: AuthData = { email: this.loginForm.value.email, password: this.loginForm.value.password };
-		this.authService.login(authData.email, authData.password);
-	}
+  constructor(private authService: AuthService) {}
 
-	ngOnInit() {
-		this.loginForm = new FormGroup({
-			email: new FormControl(null, { validators: [ Validators.required, Validators.email ] }),
-			password: new FormControl(null, { validators: [ Validators.required ] })
-		});
+  onLogin() {
+    const authData: AuthData = { username: this.loginForm.value.username, password: this.loginForm.value.password };
+    this.isLoading = true;
+    this.authService.login(authData.username, authData.password);
+  }
 
-		this.authStatusSub = this.authService.getAuthStatusListener().subscribe((authStatus) => {});
-	}
+  ngOnInit() {
+    this.loginForm = new FormGroup({
+      username: new FormControl(null, { validators: [ Validators.required ] }),
+      password: new FormControl(null, { validators: [ Validators.required ] })
+    });
 
-	ngOnDestroy() {
-		this.authStatusSub.unsubscribe();
-	}
+    this.authStatusSub = this.authService.getAuthStatusListener().subscribe((authStatus) => {});
+  }
+
+  ngOnDestroy() {
+    this.authStatusSub.unsubscribe();
+  }
 }

@@ -1,48 +1,52 @@
 <div class="wrapper">
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
 
-  <mat-form-field appearance="fill" class="sort-option">
-    <mat-label>Sort By...</mat-label>
-    <mat-select [(value)]="sortChoice" (selectionChange)="onSortSelected($event.value)">
-      <mat-option *ngFor="let option of sortOptions" [value]="option.value">
-        {{ option.viewValue }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  <div *ngIf="!isLoading">
+    <mat-form-field appearance="fill" class="sort-option">
+      <mat-label>Sort By...</mat-label>
+      <mat-select [(value)]="sortChoice" (selectionChange)="onSortSelected($event.value)">
+        <mat-option *ngFor="let option of sortOptions" [value]="option.value">
+          <p>{{ option.viewValue }} <fa-icon [icon]="option.icon"></fa-icon>
+          </p>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <mat-card *ngFor="let sub of subscriptions">
+    <mat-card *ngFor="let sub of subscriptions">
 
-    <mat-card-title>
-      <span>
-        {{ sub.title }}
-      </span>
-      <span class="spacer"></span>
+      <mat-card-title>
+        <span>
+          {{ sub.title }}
+        </span>
+        <span class="spacer"></span>
 
-      <a mat-button [routerLink]="['/edit', sub.id]">
-        <fa-icon [icon]=" faEdit"></fa-icon>
-      </a>
+        <a mat-button [routerLink]="['/edit', sub.id]" matTooltip="Edit">
+          <fa-icon [icon]=" faEdit"></fa-icon>
+        </a>
 
-      <button mat-button (click)="openDeleteDialog(sub.id, sub.title)">
-        <fa-icon [icon]="faTrash"></fa-icon>
-      </button>
-    </mat-card-title>
+        <button mat-button (click)="openDeleteDialog(sub.id, sub.title)" matTooltip="Delete">
+          <fa-icon [icon]="faTrash"></fa-icon>
+        </button>
+      </mat-card-title>
 
-    <mat-card-content>
-      <div class="subscription-info-item">
-        <fa-icon [icon]="faCalendar"></fa-icon>
-        {{ sub.startDateString }}
-      </div>
+      <mat-card-content>
+        <div class="subscription-info-item">
+          <fa-icon [icon]="faCalendar"></fa-icon>
+          {{ sub.startDateString }}
+        </div>
 
-      <div class="subscription-info-item">
-        <fa-icon [icon]="faRedoAlt"></fa-icon>
-        {{ toUpper(sub.billingCycle) }}
-      </div>
+        <div class="subscription-info-item">
+          <fa-icon [icon]="faRedoAlt"></fa-icon>
+          {{ toUpper(sub.billingCycle) }}
+        </div>
 
-      <div class="subscription-info-item">
-        <fa-icon [icon]="faTags"></fa-icon>
-        £{{ sub.price }}
-      </div>
-    </mat-card-content>
-  </mat-card>
+        <div class="subscription-info-item">
+          <fa-icon [icon]="faTags"></fa-icon>
+          £{{ sub.price }}
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
 
 <mat-paginator [length]="subscriptionCount" [pageSize]="subscriptionsPerPage" [pageSizeOptions]="pageSizeOptions"

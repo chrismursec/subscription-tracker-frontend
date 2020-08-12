@@ -1,5 +1,7 @@
 <div class="wrapper">
-  <mat-card class="form-card">
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+
+  <mat-card class="form-card" *ngIf="!isLoading">
 
     <form [formGroup]="userForm" (ngSubmit)="onRegistration()">
 
@@ -15,7 +17,7 @@
 
 
       <mat-form-field>
-        <input type="email" name="email" placeholder="Email Address" formControlName="email" required email matInput />
+        <input type="text" name="username" placeholder="Username" formControlName="username" required matInput />
       </mat-form-field>
 
       <mat-form-field>

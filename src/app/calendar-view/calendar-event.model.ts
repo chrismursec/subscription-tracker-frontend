@@ -1,4 +1,4 @@
 export interface CalendarEvent {
-	title: string;
-	start: any;
+  title: string;
+  start: any;
 }

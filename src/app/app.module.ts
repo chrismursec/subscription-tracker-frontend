@@ -19,12 +19,14 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -48,58 +50,60 @@ import { ErrorInterceptor } from './error.interceptor';
 FullCalendarModule.registerPlugins([ dayGridPlugin ]);
 
 @NgModule({
-	declarations: [
-		AppComponent,
-		HeaderComponent,
-		LoginComponent,
-		RegisterComponent,
-		CreateSubscriptionComponent,
-		ListSubscriptionsComponent,
-		HomeComponent,
-		CalendarViewComponent,
-		DeleteDialogComponent,
-		FooterComponent,
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    LoginComponent,
+    RegisterComponent,
+    CreateSubscriptionComponent,
+    ListSubscriptionsComponent,
+    HomeComponent,
+    CalendarViewComponent,
+    DeleteDialogComponent,
+    FooterComponent,
 
-		TagChartComponent,
-		ChartRootComponent,
-		PrivacyPolicyComponent,
-		FeaturesComponent
-	],
-	imports: [
-		BrowserModule,
-		BrowserAnimationsModule,
-		AppRoutingModule,
-		ReactiveFormsModule,
-		FormsModule,
-		HttpClientModule,
+    TagChartComponent,
+    ChartRootComponent,
+    PrivacyPolicyComponent,
+    FeaturesComponent
+  ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule,
 
-		FontAwesomeModule,
-		FullCalendarModule,
+    FontAwesomeModule,
+    FullCalendarModule,
 
-		MatButtonModule,
-		MatCardModule,
-		MatDatepickerModule,
-		MatDialogModule,
-		MatExpansionModule,
-		MatFormFieldModule,
-		MatInputModule,
-		MatListModule,
-		MatMenuModule,
-		MatNativeDateModule,
-		MatPaginatorModule,
-		MatRadioModule,
-		MatSelectModule,
-		MatSidenavModule,
-		MatSnackBarModule,
-		MatTabsModule,
-		MatToolbarModule
-	],
-	providers: [
-		{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-		{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-		AuthGuard
-	],
-	bootstrap: [ AppComponent ],
-	entryComponents: [ DeleteDialogComponent ]
+    MatButtonModule,
+    MatCardModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatListModule,
+    MatMenuModule,
+    MatNativeDateModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatSnackBarModule,
+    MatTabsModule,
+    MatToolbarModule,
+    MatTooltipModule
+  ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    AuthGuard
+  ],
+  bootstrap: [ AppComponent ],
+  entryComponents: [ DeleteDialogComponent ]
 })
 export class AppModule {}

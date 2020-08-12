@@ -1,6 +1,8 @@
 <div class="wrapper">
   <mat-card class="form-card">
-    <form [formGroup]="form" (submit)="onSubmit()">
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+
+    <form [formGroup]="form" (submit)="onSubmit()" *ngIf="!isLoading">
 
 
       <mat-form-field>
