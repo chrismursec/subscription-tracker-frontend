@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, HostListener } from '@angular/core';
 import { Chart } from 'chart.js';
 import { ChartsService } from '../charts.service';
 import { Subscription } from 'rxjs';
@@ -10,18 +10,38 @@ import { Subscription } from 'rxjs';
 })
 export class TagChartComponent implements OnInit {
   private tagSub: Subscription;
-  ctx = 'myChart';
+
   tags;
+
   isLoading = false;
-  myChart: any;
+
+  myChart: Chart;
+
+  innerWidth: number;
+  isSmallScreen: boolean;
 
   constructor(private chartService: ChartsService, private elementRef: ElementRef) {}
+
+  getScreenSize() {
+    return window.innerWidth;
+  }
+
+  @HostListener('window:resize', [ '$event' ])
+  onResize(event) {
+    this.innerWidth = this.getScreenSize();
+    this.innerWidth <= 725 ? (this.isSmallScreen = false) : (this.isSmallScreen = true);
+    this.myChart.options.legend.display = this.isSmallScreen;
+  }
 
   ngOnInit() {
     const htmlRef = this.elementRef.nativeElement.querySelector(`#myChart`);
 
+    const initialScreenSize = this.getScreenSize();
+    initialScreenSize > 725 ? (this.isSmallScreen = true) : (this.isSmallScreen = false);
+
     this.isLoading = true;
     this.chartService.getUsersTagData();
+
     this.tagSub = this.chartService.getUserTagsUpdateListener().subscribe((tagData) => {
       this.isLoading = false;
       this.tags = tagData;
@@ -37,7 +57,7 @@ export class TagChartComponent implements OnInit {
         tagData.tagCount.shopping
       ];
 
-      const myChart = new Chart(htmlRef, {
+      this.myChart = new Chart(htmlRef, {
         type: 'pie',
         data: {
           labels: [
@@ -62,20 +82,23 @@ export class TagChartComponent implements OnInit {
                 '#FFEB3B',
                 '#FF9800',
                 '#009688'
-              ],
-              borderWidth: 1
+              ]
             }
           ]
         },
         options: {
-          scales: {
-            yAxes: [
-              {
-                ticks: {
-                  beginAtZero: true
-                }
-              }
-            ]
+          maintainAspectRatio: false,
+          title: {
+            text: 'Your Tag Data',
+            fontSize: 24,
+            fontFamily: 'Roboto',
+            display: true
+          },
+
+          scales: {},
+          legend: {
+            display: this.isSmallScreen,
+            position: 'top'
           }
         }
       });

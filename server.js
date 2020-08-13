@@ -1,3 +1,4 @@
+//for production build only. change package.json "start" to 'node server.js
 const express = require('express');
 const app = express();
 app.use(express.static('./dist/front-end'));

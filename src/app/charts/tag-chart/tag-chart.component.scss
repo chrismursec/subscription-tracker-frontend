@@ -1,3 +1,33 @@
+h1,
 mat-spinner {
   margin: auto;
+}
+
+
+
+.wrapper {
+  align-items: center;
+  align-content: center;
+  display: flex;
+  flex-direction: column;
+
+  h1 {
+    align-self: center;
+  }
+
+  .canvas-container {
+    position: relative;
+    height: 80vh;
+    width: 160vw;
+  }
+}
+
+@media all and (max-width:725px) {
+  .canvas-container {
+    position: relative;
+    height: 20vh;
+    width: 40vw;
+    margin-right: 2em;
+    margin-left: 2em;
+  }
 }
