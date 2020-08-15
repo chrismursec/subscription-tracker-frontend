@@ -10,9 +10,9 @@ import { Subscription } from 'rxjs';
   styleUrls: [ './login.component.scss' ]
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  loginForm: FormGroup;
+  public loginForm: FormGroup;
   private authStatusSub: Subscription;
-  isLoading = false;
+  isLoading: boolean = false;
 
   constructor(private authService: AuthService) {}
 

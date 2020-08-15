@@ -51,6 +51,7 @@ import { FeaturesComponent } from './pages/features/features.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SettingsRootComponent } from './settings/settings-root/settings-root.component';
 import { DeleteAccountDialogComponent } from './settings/delete-account-dialog/delete-account-dialog.component';
+import { CostChartComponent } from './charts/cost-chart/cost-chart.component';
 
 FullCalendarModule.registerPlugins([ dayGridPlugin, listPlugin ]);
 
@@ -73,7 +74,8 @@ FullCalendarModule.registerPlugins([ dayGridPlugin, listPlugin ]);
     FeaturesComponent,
     DashboardComponent,
     SettingsRootComponent,
-    DeleteAccountDialogComponent
+    DeleteAccountDialogComponent,
+    CostChartComponent
   ],
   imports: [
     BrowserModule,

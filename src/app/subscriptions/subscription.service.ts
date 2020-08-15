@@ -26,7 +26,7 @@ export class SubscriptionService {
   }
 
   updateSubscription(data) {
-    this.http.put(this.hostUrl + `/${data.id}`, data).subscribe((response) => {
+    this.http.put(`${this.hostUrl}/${data.id}`, data).subscribe((response) => {
       this.router.navigate([ '/subscriptions' ]);
     });
   }
@@ -83,7 +83,7 @@ export class SubscriptionService {
       startDateString: string;
       owner: string;
       tags: string;
-    }>(this.hostUrl + `/${id}`);
+    }>(`${this.hostUrl}/${id}`);
   }
 
   getSubscriptionUpdateListener() {
@@ -91,6 +91,6 @@ export class SubscriptionService {
   }
 
   deleteSubscription(id: string) {
-    return this.http.delete(this.hostUrl + `/${id}`);
+    return this.http.delete(`${this.hostUrl}/${id}`);
   }
 }

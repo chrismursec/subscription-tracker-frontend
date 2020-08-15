@@ -21,8 +21,6 @@ import {
   styleUrls: [ './list-subscriptions.component.scss' ]
 })
 export class ListSubscriptionsComponent implements OnInit {
-  constructor(private subscriptionService: SubscriptionService, public dialog: MatDialog) {}
-
   private subscriptionSub: Subscription;
   subscriptions: UserSubscription[] = [];
   subscriptionCount = 0;
@@ -49,6 +47,8 @@ export class ListSubscriptionsComponent implements OnInit {
   faSortUp = faSortUp;
   faSortDown = faSortDown;
   isLoading = false;
+
+  constructor(private subscriptionService: SubscriptionService, public dialog: MatDialog) {}
 
   onChangedPage(pageData: PageEvent) {
     this.isLoading = true;

@@ -13,7 +13,8 @@ import { Subscription } from 'rxjs';
 export class RegisterComponent implements OnInit, OnDestroy {
   public registerForm: FormGroup;
   private authStatusSub: Subscription;
-  isLoading = false;
+  isLoading: boolean = false;
+
   constructor(private authService: AuthService, private snackBar: MatSnackBar) {}
 
   onRegistration() {

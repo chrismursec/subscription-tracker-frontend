@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 })
 export class ChartsService {
   private tagsUpdated = new Subject<{ tags: any; count: number; tagCount: any }>();
+  private pricesUpdated = new Subject<{ titles: any; prices: any }>();
   private tags: [];
   private hostUrl: string = 'https://subtrackerapi.herokuapp.com/api/statistics';
   // private hostUrl: string = 'http://localhost:3000/api/statistics';
@@ -16,7 +17,7 @@ export class ChartsService {
 
   getUsersTagData() {
     this.http
-      .get<{ tags: any }>(this.hostUrl + '/tag-data')
+      .get<{ tags: any }>(`${this.hostUrl}/tag-data`)
       .pipe(
         map((tagData: any) => {
           return {
@@ -38,5 +39,13 @@ export class ChartsService {
 
   getUserTagsUpdateListener() {
     return this.tagsUpdated.asObservable();
+  }
+
+  getUserPriceData() {
+    return this.http.get<{ subscriptionTitles: []; subscriptionPrices: [] }>(`${this.hostUrl}/costs`);
+  }
+
+  getUserPricesUpdateListener() {
+    return this.pricesUpdated.asObservable();
   }
 }

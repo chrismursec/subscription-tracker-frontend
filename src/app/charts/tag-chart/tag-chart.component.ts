@@ -10,11 +10,8 @@ import { Subscription } from 'rxjs';
 })
 export class TagChartComponent implements OnInit {
   private tagSub: Subscription;
-
-  isLoading = false;
-
-  myChart: Chart;
-
+  tagPieChart: Chart;
+  isLoading: boolean = false;
   innerWidth: number;
   isSmallScreen: boolean;
 
@@ -28,11 +25,11 @@ export class TagChartComponent implements OnInit {
   onResize(event) {
     this.innerWidth = this.getScreenSize();
     this.innerWidth <= 725 ? (this.isSmallScreen = false) : (this.isSmallScreen = true);
-    this.myChart.options.legend.display = this.isSmallScreen;
+    this.tagPieChart.options.legend.display = this.isSmallScreen;
   }
 
   ngOnInit() {
-    const htmlRef = this.elementRef.nativeElement.querySelector(`#myChart`);
+    const htmlRef = this.elementRef.nativeElement.querySelector(`#tagPieChart`);
 
     const initialScreenSize = this.getScreenSize();
     initialScreenSize > 725 ? (this.isSmallScreen = true) : (this.isSmallScreen = false);
@@ -54,7 +51,7 @@ export class TagChartComponent implements OnInit {
         tagData.tagCount.shopping
       ];
 
-      this.myChart = new Chart(htmlRef, {
+      this.tagPieChart = new Chart(htmlRef, {
         type: 'pie',
         data: {
           labels: [
@@ -92,8 +89,6 @@ export class TagChartComponent implements OnInit {
             fontFamily: 'Roboto',
             display: true
           },
-
-          scales: {},
           legend: {
             display: this.isSmallScreen,
             position: 'top'
