@@ -10,6 +10,7 @@ export class ChartsService {
   private tagsUpdated = new Subject<{ tags: any; count: number; tagCount: any }>();
   private tags: [];
   private hostUrl: string = 'https://subtrackerapi.herokuapp.com/api/statistics';
+  // private hostUrl: string = 'http://localhost:3000/api/statistics';
 
   constructor(private http: HttpClient) {}
 

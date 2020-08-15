@@ -3,7 +3,7 @@
 
   <mat-card class="form-card" *ngIf="!isLoading">
 
-    <form [formGroup]="userForm" (ngSubmit)="onRegistration()">
+    <form [formGroup]="registerForm" (ngSubmit)="onRegistration()">
 
       <mat-form-field>
         <mat-label>First Name</mat-label>
@@ -30,7 +30,7 @@
       </mat-form-field>
 
 
-      <button mat-raised-button color="accent" type="submit">SIGN UP</button>
+      <button mat-raised-button color="accent" type="submit" [disabled]="registerForm.invalid">SIGN UP</button>
 
     </form>
   </mat-card>

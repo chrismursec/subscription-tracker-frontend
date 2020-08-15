@@ -1,5 +1,5 @@
 <div class="wrapper">
-  <mat-card class="form-card">
+  <mat-card>
     <mat-spinner *ngIf="isLoading"></mat-spinner>
 
     <form [formGroup]="form" (submit)="onSubmit()" *ngIf="!isLoading">
@@ -44,10 +44,7 @@
         </mat-select>
       </mat-form-field>
 
-      <button mat-raised-button color="accent" type="submit">SUBMIT</button>
-
-
-
+      <button mat-raised-button color="accent" type="submit" [disabled]="form.invalid">SUBMIT</button>
 
     </form>
   </mat-card>

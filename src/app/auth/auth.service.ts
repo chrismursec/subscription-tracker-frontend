@@ -15,6 +15,7 @@ export class AuthService {
   private authStatusListener = new Subject<boolean>();
   private isAuthenticated: boolean = false;
   private hostUrl: string = 'https://subtrackerapi.herokuapp.com/api/users';
+  // private hostUrl: string = 'http://localhost:3000/api/users';
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -44,6 +45,17 @@ export class AuthService {
         this.authStatusListener.next(false);
       }
     );
+  }
+
+  deleteUser(id: string) {
+    this.http.delete(this.hostUrl + `/${id}`).subscribe(() => {
+      this.logout();
+      this.router.navigate([ '/' ]);
+    });
+  }
+
+  changePassword(passwordData) {
+    return this.http.put(this.hostUrl + `/password`, passwordData);
   }
 
   login(username: string, password: string) {

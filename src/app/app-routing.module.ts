@@ -11,6 +11,8 @@ import { ChartRootComponent } from './charts/chart-root/chart-root.component';
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 import { FeaturesComponent } from './pages/features/features.component';
 import { TagChartComponent } from './charts/tag-chart/tag-chart.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { SettingsRootComponent } from './settings/settings-root/settings-root.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -21,9 +23,11 @@ const routes: Routes = [
   { path: 'create', component: CreateSubscriptionComponent, canActivate: [ AuthGuard ] },
   { path: 'edit/:postId', component: CreateSubscriptionComponent, canActivate: [ AuthGuard ] },
   { path: 'subscriptions', component: ListSubscriptionsComponent, canActivate: [ AuthGuard ] },
-  { path: 'subscriptions/calendar', component: CalendarViewComponent, canActivate: [ AuthGuard ] },
-  // { path: 'charts', component: ChartRootComponent, canActivate: [ AuthGuard ] }
-  { path: 'tag-data', component: TagChartComponent, canActivate: [ AuthGuard ] }
+  // { path: 'subscriptions/calendar', component: CalendarViewComponent, canActivate: [ AuthGuard ] },
+  // { path: 'charts', component: ChartRootComponent, canActivate: [ AuthGuard ] },
+  // { path: 'tag-data', component: TagChartComponent, canActivate: [ AuthGuard ] },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [ AuthGuard ] },
+  { path: 'settings', component: SettingsRootComponent, canActivate: [ AuthGuard ] }
 ];
 
 @NgModule({

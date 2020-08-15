@@ -28,7 +28,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       password: new FormControl(null, { validators: [ Validators.required ] })
     });
 
-    this.authStatusSub = this.authService.getAuthStatusListener().subscribe((authStatus) => {});
+    this.authStatusSub = this.authService.getAuthStatusListener().subscribe((authStatus) => {
+      this.isLoading = false;
+    });
   }
 
   ngOnDestroy() {

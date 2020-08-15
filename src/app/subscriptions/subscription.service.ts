@@ -12,6 +12,7 @@ export class SubscriptionService {
   private subscriptions: UserSubscription[] = [];
   private subscriptionsUpdated = new Subject<{ subscriptions: UserSubscription[]; subscriptionCount: number }>();
   private hostUrl: string = 'https://subtrackerapi.herokuapp.com/api/subscriptions';
+  // private hostUrl: string = 'http://localhost:3000/api/subscriptions';
 
   constructor(private http: HttpClient, private router: Router) {}
 

@@ -11,8 +11,6 @@ import { Subscription } from 'rxjs';
 export class TagChartComponent implements OnInit {
   private tagSub: Subscription;
 
-  tags;
-
   isLoading = false;
 
   myChart: Chart;
@@ -44,7 +42,6 @@ export class TagChartComponent implements OnInit {
 
     this.tagSub = this.chartService.getUserTagsUpdateListener().subscribe((tagData) => {
       this.isLoading = false;
-      this.tags = tagData;
 
       const dataCount = [
         tagData.tagCount.apps,
@@ -87,6 +84,7 @@ export class TagChartComponent implements OnInit {
           ]
         },
         options: {
+          responsive: true,
           maintainAspectRatio: false,
           title: {
             text: 'Your Tag Data',

@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/angular';
-import { SubscriptionService } from '../subscriptions/subscription.service';
-import { Subscription } from 'rxjs';
-import { UserSubscription } from '../subscriptions/subscription.model';
-import * as moment from 'moment';
+import listPlugin from '@fullcalendar/list';
 import { CalendarEvent } from './calendar-event.model';
+import { SubscriptionService } from '../subscriptions/subscription.service';
+import { UserSubscription } from '../subscriptions/subscription.model';
+import { Subscription } from 'rxjs';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-calendar-view',
@@ -14,10 +15,14 @@ import { CalendarEvent } from './calendar-event.model';
 export class CalendarViewComponent implements OnInit {
   subscriptions: UserSubscription[];
   events: CalendarEvent[];
+  isLoading: boolean = false;
   private subscriptionSub: Subscription;
-  isLoading = false;
+
   calendarOptions: CalendarOptions = {
-    initialView: 'dayGridMonth',
+    plugins: [ listPlugin ],
+    initialView: 'listMonth',
+    displayEventTime: false,
+    height: 'auto',
     events: [],
     headerToolbar: {
       left: '',

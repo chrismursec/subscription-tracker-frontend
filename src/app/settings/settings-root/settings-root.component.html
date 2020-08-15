@@ -1,0 +1,63 @@
+<div class="wrapper">
+
+  <mat-accordion>
+
+    <mat-expansion-panel hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Change Password
+        </mat-panel-title>
+        <mat-panel-description>
+          Change your account password
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+
+      <mat-card>
+
+        <form [formGroup]="changePasswordForm" (ngSubmit)="onChangePassword()">
+
+          <mat-form-field>
+            <input type="password" name="oldPassword" placeholder="Old Password" formControlName="oldPassword" required
+              matInput>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input type="password" name="newPassword" placeholder="New Password" formControlName="newPassword" required
+              matInput>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input type="password" name="confirmNewPassword" placeholder="Confirm New Password"
+              formControlName="confirmNewPassword" required matInput>
+          </mat-form-field>
+
+
+          <button mat-raised-button color="accent" type="submit" [disabled]="changePasswordForm.invalid">Change
+            Password</button>
+
+
+
+
+        </form>
+
+      </mat-card>
+
+
+    </mat-expansion-panel>
+
+    <mat-expansion-panel hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Delete Account
+        </mat-panel-title>
+        <mat-panel-description>
+          Permanently delete your account and data
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <button mat-button (click)="openDeleteUserDialog()" color="warn">Delete Account</button>
+    </mat-expansion-panel>
+
+  </mat-accordion>
+
+</div>

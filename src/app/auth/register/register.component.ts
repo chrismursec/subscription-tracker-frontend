@@ -11,21 +11,21 @@ import { Subscription } from 'rxjs';
   styleUrls: [ './register.component.scss' ]
 })
 export class RegisterComponent implements OnInit, OnDestroy {
-  public userForm: FormGroup;
+  public registerForm: FormGroup;
   private authStatusSub: Subscription;
   isLoading = false;
   constructor(private authService: AuthService, private snackBar: MatSnackBar) {}
 
   onRegistration() {
     this.isLoading = true;
-    if (this.userForm.value.password !== this.userForm.value.confirmPassword) {
+    if (this.registerForm.value.password !== this.registerForm.value.confirmPassword) {
       const snackBarRef = this.snackBar.open('Passwords do not match', 'Close');
-    } else if (this.userForm.value.password === this.userForm.value.confirmPassword) {
+    } else if (this.registerForm.value.password === this.registerForm.value.confirmPassword) {
       const createdUser: User = {
-        firstName: this.userForm.value.firstName,
-        lastName: this.userForm.value.lastName,
-        username: this.userForm.value.username,
-        password: this.userForm.value.password
+        firstName: this.registerForm.value.firstName,
+        lastName: this.registerForm.value.lastName,
+        username: this.registerForm.value.username,
+        password: this.registerForm.value.password
       };
 
       this.authService.createUser(
@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.userForm = new FormGroup({
+    this.registerForm = new FormGroup({
       firstName: new FormControl(null, { validators: [ Validators.required, Validators.minLength(3) ] }),
       lastName: new FormControl(null, { validators: [ Validators.required, Validators.minLength(3) ] }),
       username: new FormControl(null, { validators: [ Validators.required ] }),
@@ -50,7 +50,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
       })
     });
 
-    this.authStatusSub = this.authService.getAuthStatusListener().subscribe((authStatus) => {});
+    this.authStatusSub = this.authService.getAuthStatusListener().subscribe((authStatus) => {
+      this.isLoading = false;
+      this.registerForm.reset();
+    });
   }
 
   ngOnDestroy() {

@@ -13,6 +13,8 @@
     <button *ngIf="!userIsAuthenticated" mat-button routerLink="/register">Sign Up</button>
   </div>
 
+  <a mat-button routerLink="/dashboard" *ngIf="userIsAuthenticated">Dashboard</a>
+
   <button *ngIf="userIsAuthenticated" mat-button [mat-menu-trigger-for]="menu" [mat-menu-trigger-for]="menu">
     Account
   </button>
@@ -24,10 +26,7 @@
 <mat-menu x-position="before" #menu="matMenu">
 
   <div *ngIf="userIsAuthenticated">
-    <a mat-menu-item routerLink="/create">Add Subscriptions</a>
-    <a mat-menu-item routerLink="/subscriptions">My Subscriptions</a>
-    <a mat-menu-item routerLink="/subscriptions/calendar">Calendar</a>
-    <a mat-menu-item routerLink="/tag-data">Tag Data</a>
+    <a mat-menu-item routerLink="/settings">Settings</a>
     <a mat-menu-item (click)="onLogout()">Logout</a>
   </div>
 
