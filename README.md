@@ -13,7 +13,7 @@ See it in action [here](https://subtracker.herokuapp.com/)
 ## Libraries Used
 - [Angular](https://angular.io/)
 - [Angular Material](https://material.angular.io/)
-- [Cbart JS](https://www.chartjs.org/)
+- [Chart JS](https://www.chartjs.org/)
 - [Angular - FontAwesome](https://github.com/FortAwesome/angular-fontawesome)
 - [Full Calendar](https://fullcalendar.io/)
 - [Moment](https://momentjs.com/)
